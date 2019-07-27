@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.componentes.domain.Funcionalidad;
-import com.proyecto.componentes.domain.Proyecto;
 import com.proyecto.componentes.domain.Respuesta;
 import com.proyecto.componentes.exception.ResourceNotFoundException;
 import com.proyecto.componentes.repository.FuncionalidadRepository;
+
+
+
+
 @RestController
 @RequestMapping("/api/v1")
 public class FuncionalidadController {
