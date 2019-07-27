@@ -19,7 +19,8 @@ public class Funcionalidad {
 	private String descripcion;
 	@Column(name="PRIORIDAD")
 	private int prioridad;
-	 @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @ManyToOne
+	 @JoinColumn(name="ID_PROYECTO")
 	    private Proyecto proyecto;
 //    @Column(name = "ID_PROYECTO")
 //    private String id_proyecto;
