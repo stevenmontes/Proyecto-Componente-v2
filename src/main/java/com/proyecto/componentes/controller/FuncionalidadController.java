@@ -21,6 +21,8 @@ import com.proyecto.componentes.repository.FuncionalidadRepository;
 @RestController
 @RequestMapping("/api/v1")
 public class FuncionalidadController {
+	
+	@Autowired
 	private FuncionalidadRepository repo;
 
 	@GetMapping("/funcionalidad")
