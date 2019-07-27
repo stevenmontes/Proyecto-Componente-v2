@@ -33,7 +33,7 @@ public class FuncionalidadController {
 		return repo.findAll();
 	}
 	
-	@GetMapping("/funcionalidad/{codigo}")
+	@GetMapping("/funcionalidades/{codigo}")
 	public Funcionalidad getFuncionalidad(@PathVariable(value = "codigo") String codigo) throws ResourceNotFoundException {
 		Funcionalidad nFuncionalidad = new Funcionalidad();
 
@@ -45,6 +45,7 @@ public class FuncionalidadController {
 
 		return nFuncionalidad;
 	}
+	
 	@PostMapping("/funcionalidades")
 	public ResponseEntity<Respuesta> createFuncionalidad(@Valid @RequestBody Funcionalidad nFuncionalidad)
 			throws ResourceNotFoundException {

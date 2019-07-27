@@ -19,19 +19,20 @@ public class Funcionalidad {
 	private String descripcion;
 	@Column(name="PRIORIDAD")
 	private int prioridad;
-    @Column(name = "ID_PROYECTO")
-    private String id_proyecto;
-	
+	 @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	    private Proyecto proyecto;
+//    @Column(name = "ID_PROYECTO")
+//    private String id_proyecto;
 	@Column(name="ESTADO")
 	private boolean estado;
 	
-	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, String id_proyecto) {
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
-		this.id_proyecto = id_proyecto;
+		this.proyecto = proyecto;
 	}
 
 	public Funcionalidad() {
@@ -70,12 +71,12 @@ public class Funcionalidad {
 		this.prioridad = prioridad;
 	}
 
-	public String getId_proyecto() {
-		return id_proyecto;
+	public Proyecto getProyecto() {
+		return proyecto;
 	}
 
-	public void setId_proyecto(String id_proyecto) {
-		this.id_proyecto = id_proyecto;
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
 	}
 
 	public boolean isEstado() {
