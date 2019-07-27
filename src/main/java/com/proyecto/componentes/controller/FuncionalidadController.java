@@ -28,7 +28,7 @@ public class FuncionalidadController {
 	@Autowired
 	private FuncionalidadRepository repo;
 
-	@GetMapping("/funcionalidad")
+	@GetMapping("/funcionalidades")
 	public List<Funcionalidad> getAllProyectos() {
 		return repo.findAll();
 	}
@@ -45,7 +45,7 @@ public class FuncionalidadController {
 
 		return nFuncionalidad;
 	}
-	@PostMapping("/funcionalidad")
+	@PostMapping("/funcionalidades")
 	public ResponseEntity<Respuesta> createFuncionalidad(@Valid @RequestBody Funcionalidad nFuncionalidad)
 			throws ResourceNotFoundException {
 		Respuesta nRespuesta = new Respuesta();
@@ -60,7 +60,7 @@ public class FuncionalidadController {
 		return ResponseEntity.ok(nRespuesta);
 	}
 
-	@PutMapping("/funcionalidad/{codigo}")
+	@PutMapping("/funcionalidades/{codigo}")
 	public ResponseEntity<Respuesta> updateFuncionalidad(@PathVariable(value = "codigo") String codigo,
 			@Valid @RequestBody Funcionalidad nFuncionalidad) throws ResourceNotFoundException {
 		Respuesta nRespuesta = new Respuesta();
