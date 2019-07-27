@@ -29,7 +29,7 @@ public class FuncionalidadController {
 	private FuncionalidadRepository repo;
 
 	@GetMapping("/funcionalidades")
-	public List<Funcionalidad> getAllProyectos() {
+	public List<Funcionalidad> getAllFuncionalidades() {
 		return repo.findAll();
 	}
 	
