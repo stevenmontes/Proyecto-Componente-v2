@@ -19,9 +19,9 @@ public class Funcionalidad {
 	private String descripcion;
 	@Column(name="PRIORIDAD")
 	private int prioridad;
-	 @ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	 @JoinColumn(name="ID_PROYECTO")
-	    private Proyecto proyecto;
+	  private Proyecto proyecto;
 //    @Column(name = "ID_PROYECTO")
 //    private String id_proyecto;
 	@Column(name="ESTADO")

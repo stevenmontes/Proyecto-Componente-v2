@@ -17,7 +17,8 @@ public class Proyecto {
 	private String descripcion;
 	@Column(name = "VERSION")
 	private String version;
-
+	@OneToMany(mappedBy = "proyecto")
+    private List<Funcionalidad> funcionalidades = new ArrayList<Funcionalidad>();
 	public Proyecto() {
 		super();
 	}
