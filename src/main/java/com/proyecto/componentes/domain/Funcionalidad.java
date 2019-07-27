@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TBL_FUNCIONAIDAD")
+@Table(name = "TBL_FUNCIONALIDAD")
 public class Funcionalidad {
 	@Id
 	@Column(name = "CODIGO")
