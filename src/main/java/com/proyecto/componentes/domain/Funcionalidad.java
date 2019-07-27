@@ -35,6 +35,10 @@ public class Funcionalidad {
 		this.proyecto = proyecto;
 	}
 
+	public Funcionalidad() {
+		
+	}
+
 	public String getCodigo() {
 		return codigo;
 	}
