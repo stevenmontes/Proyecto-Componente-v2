@@ -19,20 +19,19 @@ public class Funcionalidad {
 	private String descripcion;
 	@Column(name="PRIORIDAD")
 	private int prioridad;
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_PROYECTO", referencedColumnName = "CODIGO")
-    private Proyecto proyecto;
+    @Column(name = "ID_PROYECTO")
+    private String id_proyecto;
 	
 	@Column(name="ESTADO")
 	private boolean estado;
 	
-	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, String id_proyecto) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
-		this.proyecto = proyecto;
+		this.id_proyecto = id_proyecto;
 	}
 
 	public Funcionalidad() {
@@ -71,12 +70,12 @@ public class Funcionalidad {
 		this.prioridad = prioridad;
 	}
 
-	public Proyecto getProyecto() {
-		return proyecto;
+	public String getId_proyecto() {
+		return id_proyecto;
 	}
 
-	public void setProyecto(Proyecto proyecto) {
-		this.proyecto = proyecto;
+	public void setId_proyecto(String id_proyecto) {
+		this.id_proyecto = id_proyecto;
 	}
 
 	public boolean isEstado() {
@@ -90,9 +89,10 @@ public class Funcionalidad {
 	@Override
 	public String toString() {
 		return "Funcionalidad [codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", prioridad=" + prioridad + ", proyecto=" + proyecto + ", estado=" + estado + "]";
+				+ ", prioridad=" + prioridad + ", id_proyecto=" + id_proyecto + ", estado=" + estado + "]";
 	}
-	
+
+
 	
 	
 }
