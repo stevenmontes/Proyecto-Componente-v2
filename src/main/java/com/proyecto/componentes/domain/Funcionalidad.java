@@ -1,12 +1,10 @@
 package com.proyecto.componentes.domain;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,26 +17,26 @@ public class Funcionalidad {
 	private String nombre;
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	@Column(name="PRIORIDAD")
+	@Column(name = "PRIORIDAD")
 	private int prioridad;
 	@ManyToOne
-	 @JoinColumn(name="ID_PROYECTO")
-	  private Proyecto proyecto;
+	@JoinColumn(name = "ID_PROYECTO")
+	private Proyecto proyecto;
 
-	@Column(name="ESTADO")
+	@Column(name = "ESTADO")
 	private boolean estado;
-	
+
 	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 		super();
 		this.codigo = codigo;
-		this.nombre = nombre;     
+		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
 		this.proyecto = proyecto;
 	}
 
 	public Funcionalidad() {
-		
+
 	}
 
 	public String getCodigo() {
@@ -95,7 +93,4 @@ public class Funcionalidad {
 				+ ", prioridad=" + prioridad + ", proyecto=" + proyecto + ", estado=" + estado + "]";
 	}
 
-
-	
-	
 }

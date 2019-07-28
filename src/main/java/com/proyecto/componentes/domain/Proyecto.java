@@ -1,6 +1,5 @@
 package com.proyecto.componentes.domain;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -31,12 +30,10 @@ public class Proyecto {
 	private String version;
 
 	@OneToMany(mappedBy = "proyecto")
-  private List<Funcionalidad> funcionalidades = new ArrayList<Funcionalidad>();
+	private List<Funcionalidad> funcionalidades = new ArrayList<Funcionalidad>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "TBL_USUARIOxPROYECTO", 
-	joinColumns = @JoinColumn(name = "ID_PROYECTO", referencedColumnName = "CODIGO"), 
-	inverseJoinColumns = @JoinColumn(name = "ID_USUARIO", referencedColumnName = "CEDULA"))
+	@JoinTable(name = "TBL_USUARIOxPROYECTO", joinColumns = @JoinColumn(name = "ID_PROYECTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_USUARIO", referencedColumnName = "CEDULA"))
 	private Set<Usuario> usuarios;
 
 	public Proyecto() {
