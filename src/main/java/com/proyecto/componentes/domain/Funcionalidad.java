@@ -1,9 +1,16 @@
 package com.proyecto.componentes.domain;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,13 +33,20 @@ public class Funcionalidad {
 	@Column(name = "ESTADO")
 	private boolean estado;
 
-	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
+	private Set<Requerimiento> requerimientos;
+
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto,
+			Requerimiento nReq) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
 		this.proyecto = proyecto;
+		this.requerimientos = Stream.of(nReq).collect(Collectors.toSet());
+		this.requerimientos.forEach(x -> x.getFuncionalidades().add(this));
 	}
 
 	public Funcionalidad() {
@@ -85,6 +99,14 @@ public class Funcionalidad {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	public Set<Requerimiento> getRequerimientos() {
+		return requerimientos;
+	}
+
+	public void setRequerimientos(Set<Requerimiento> requerimientos) {
+		this.requerimientos = requerimientos;
 	}
 
 	@Override

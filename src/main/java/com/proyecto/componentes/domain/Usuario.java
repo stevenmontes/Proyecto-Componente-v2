@@ -30,7 +30,7 @@ public class Usuario {
 	private String clave;
 
 	@ManyToMany(mappedBy = "usuarios")
-	private Set<Proyecto> proyectos = new HashSet<>();;
+	private Set<Proyecto> proyectos = new HashSet<>();
 
 	public Usuario() {
 
