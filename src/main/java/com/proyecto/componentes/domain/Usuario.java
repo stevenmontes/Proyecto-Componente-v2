@@ -1,9 +1,14 @@
 package com.proyecto.componentes.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +29,9 @@ public class Usuario {
 	private Date fechaNacimiento;
 	@Column(name = "CLAVE")
 	private String clave;
+
+	@ManyToMany(mappedBy = "usuarios")
+	private Set<Proyecto> proyectos = new HashSet<>();;
 
 	public Usuario() {
 
@@ -95,6 +103,14 @@ public class Usuario {
 
 	public void setClave(String clave) {
 		this.clave = clave;
+	}
+
+	public Set<Proyecto> getProyectos() {
+		return proyectos;
+	}
+
+	public void setProyectos(Set<Proyecto> proyectos) {
+		this.proyectos = proyectos;
 	}
 
 }
