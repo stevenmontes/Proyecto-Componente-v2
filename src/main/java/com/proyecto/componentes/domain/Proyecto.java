@@ -1,5 +1,8 @@
 package com.proyecto.componentes.domain;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "TBL_PROYECTO")
@@ -25,6 +29,9 @@ public class Proyecto {
 	private String descripcion;
 	@Column(name = "VERSION")
 	private String version;
+
+	@OneToMany(mappedBy = "proyecto")
+  private List<Funcionalidad> funcionalidades = new ArrayList<Funcionalidad>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "TBL_USUARIOxPROYECTO", 
