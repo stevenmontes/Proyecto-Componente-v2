@@ -1,10 +1,14 @@
 package com.proyecto.componentes.domain;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,6 +32,9 @@ public class Funcionalidad {
 	@Column(name="ESTADO")
 	private boolean estado;
 	
+	
+	@ManyToMany(mappedBy = "funcionalidades")
+	private Set<Actor> actores = new HashSet<>();
 	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 		super();
 		this.codigo = codigo;
@@ -87,6 +94,15 @@ public class Funcionalidad {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+	
+
+	public Set<Actor> getActores() {
+		return actores;
+	}
+
+	public void setActores(Set<Actor> actores) {
+		this.actores = actores;
 	}
 
 	@Override
