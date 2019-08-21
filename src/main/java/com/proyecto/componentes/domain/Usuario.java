@@ -29,8 +29,8 @@ public class Usuario {
 	@Column(name = "CLAVE")
 	private String clave;
 
-	@ManyToMany(mappedBy = "usuarios")
-	private Set<Proyecto> proyectos = new HashSet<>();
+	//@ManyToMany(mappedBy = "usuarios")
+	//private Set<Proyecto> proyectos = new HashSet<>();
 
 	public Usuario() {
 
@@ -104,12 +104,12 @@ public class Usuario {
 		this.clave = clave;
 	}
 
-	public Set<Proyecto> getProyectos() {
-		return proyectos;
-	}
-
-	public void setProyectos(Set<Proyecto> proyectos) {
-		this.proyectos = proyectos;
-	}
+//	public Set<Proyecto> getProyectos() {
+//		return proyectos;
+//	}
+//
+//	public void setProyectos(Set<Proyecto> proyectos) {
+//		this.proyectos = proyectos;
+//	}
 
 }

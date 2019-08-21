@@ -47,7 +47,7 @@ public class Proyecto {
 		this.descripcion = descripcion;
 		this.version = version;
 		this.usuarios = Stream.of(nUsuario).collect(Collectors.toSet());
-		this.usuarios.forEach(x -> x.getProyectos().add(this));
+	//	this.usuarios.forEach(x -> x.getProyectos().add(this));
 	}
 
 	public String getCodigo() {
