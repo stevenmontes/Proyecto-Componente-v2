@@ -36,7 +36,6 @@ public class Funcionalidad {
 	
 	@ManyToMany(mappedBy = "funcionalidades")
 	private Set<Actor> actores = new HashSet<>();
-	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
