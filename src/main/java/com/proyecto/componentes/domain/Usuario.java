@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -30,8 +29,8 @@ public class Usuario {
 	@Column(name = "CLAVE")
 	private String clave;
 
-	@ManyToMany(mappedBy = "usuarios")
-	private Set<Proyecto> proyectos = new HashSet<>();;
+	//@ManyToMany(mappedBy = "usuarios")
+	//private Set<Proyecto> proyectos = new HashSet<>();
 
 	public Usuario() {
 
@@ -105,12 +104,12 @@ public class Usuario {
 		this.clave = clave;
 	}
 
-	public Set<Proyecto> getProyectos() {
-		return proyectos;
-	}
-
-	public void setProyectos(Set<Proyecto> proyectos) {
-		this.proyectos = proyectos;
-	}
+//	public Set<Proyecto> getProyectos() {
+//		return proyectos;
+//	}
+//
+//	public void setProyectos(Set<Proyecto> proyectos) {
+//		this.proyectos = proyectos;
+//	}
 
 }

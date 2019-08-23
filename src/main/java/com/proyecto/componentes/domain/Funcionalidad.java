@@ -1,16 +1,16 @@
 package com.proyecto.componentes.domain;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,29 +23,39 @@ public class Funcionalidad {
 	private String nombre;
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	@Column(name="PRIORIDAD")
+	@Column(name = "PRIORIDAD")
 	private int prioridad;
 	@ManyToOne
-	 @JoinColumn(name="ID_PROYECTO")
-	  private Proyecto proyecto;
+	@JoinColumn(name = "ID_PROYECTO")
+	private Proyecto proyecto;
 
-	@Column(name="ESTADO")
+	@Column(name = "ESTADO")
 	private boolean estado;
+
 	
 	
 	@ManyToMany(mappedBy = "funcionalidades")
 	private Set<Actor> actores = new HashSet<>();
 	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
+	private Set<Requerimiento> requerimientos;
+
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto,
+			Requerimiento nReq) {
 		super();
 		this.codigo = codigo;
-		this.nombre = nombre;     
+		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
 		this.proyecto = proyecto;
+		this.requerimientos = Stream.of(nReq).collect(Collectors.toSet());
+		this.requerimientos.forEach(x -> x.getFuncionalidades().add(this));
 	}
 
 	public Funcionalidad() {
-		
+
 	}
 
 	public String getCodigo() {
@@ -105,13 +115,18 @@ public class Funcionalidad {
 		this.actores = actores;
 	}
 
+	public Set<Requerimiento> getRequerimientos() {
+		return requerimientos;
+	}
+
+	public void setRequerimientos(Set<Requerimiento> requerimientos) {
+		this.requerimientos = requerimientos;
+	}
+
 	@Override
 	public String toString() {
 		return "Funcionalidad [codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion
 				+ ", prioridad=" + prioridad + ", proyecto=" + proyecto + ", estado=" + estado + "]";
 	}
 
-
-	
-	
 }
