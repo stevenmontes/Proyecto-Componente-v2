@@ -1,9 +1,8 @@
 package com.proyecto.componentes.domain;
-
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +31,12 @@ public class Funcionalidad {
 
 	@Column(name = "ESTADO")
 	private boolean estado;
+
+	
+	
+	@ManyToMany(mappedBy = "funcionalidades")
+	private Set<Actor> actores = new HashSet<>();
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
@@ -99,6 +104,15 @@ public class Funcionalidad {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+	
+
+	public Set<Actor> getActores() {
+		return actores;
+	}
+
+	public void setActores(Set<Actor> actores) {
+		this.actores = actores;
 	}
 
 	public Set<Requerimiento> getRequerimientos() {

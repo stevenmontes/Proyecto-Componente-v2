@@ -1,8 +1,14 @@
 package com.proyecto.componentes.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +24,17 @@ public class Actor {
 	@Column(name="ESTADO")
 	private boolean estado;
 	
+	
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "TBL_ACTORxFUNCIONALIDAD", 
+        joinColumns =  @JoinColumn(name = "ID_ACTOR",referencedColumnName = "ID"), 
+        inverseJoinColumns =  @JoinColumn(name = "ID_FUNCIONALIDAD" ,referencedColumnName = "CODIGO")
+    )
+    Set<Funcionalidad> funcionalidades;
+	
+    
 	public Actor(int id, String nombre, String descripcion, boolean estado) {
 		super();
 		this.id = id;
@@ -60,6 +77,14 @@ public class Actor {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+	
+	public Set<Funcionalidad> getFuncionalidades() {
+		return funcionalidades;
+	}
+
+	public void setFuncionalidades(Set<Funcionalidad> funcionalidades) {
+		this.funcionalidades = funcionalidades;
 	}
 
 	@Override
