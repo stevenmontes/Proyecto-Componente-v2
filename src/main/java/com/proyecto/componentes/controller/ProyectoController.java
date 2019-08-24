@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,42 +29,62 @@ public class ProyectoController {
 	private ProyectoRepository repo;
 
 	@GetMapping("/proyectos")
-	public List<Proyecto> getAllProyectos() {
-		return repo.findAll();
+	public ResponseEntity<?> getAllProyectos() {
+		try {
+			List<Proyecto> proyectos = repo.findAll();
+			return new ResponseEntity<>(proyectos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error al obtener los proyectos", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	@GetMapping("/proyectos/{codigo}")
-	public Proyecto getProyecto(@PathVariable(value = "codigo") String codigo) throws ResourceNotFoundException {
+	public ResponseEntity<?> getProyecto(@PathVariable(value = "codigo") String codigo) {
 		Proyecto nProyecto = new Proyecto();
-
+		Respuesta nRes = new Respuesta();
+		HttpStatus status;
+		
 		try {
 			nProyecto = repo.findByCodigo(codigo);
+			
+			if(nProyecto == null) {
+				nRes.Error("Codigo del proyecto no existe");
+				status = HttpStatus.BAD_REQUEST;
+			} else {
+				nRes.Correcto("200", nProyecto);
+				status = HttpStatus.OK;
+			}
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			nRes.Error(e);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-
-		return nProyecto;
+		
+		return new ResponseEntity<>(nRes, status);
 	}
 
 	@PostMapping("/proyectos")
-	public ResponseEntity<Respuesta> createProyecto(@Valid @RequestBody Proyecto nProyecto)
-			throws ResourceNotFoundException {
+	public ResponseEntity<?> createProyecto(@Valid @RequestBody Proyecto nProyecto) throws ResourceNotFoundException {
 		Respuesta nRespuesta = new Respuesta();
-
+		HttpStatus status;
+		
 		try {
 			repo.save(nProyecto);
 			nRespuesta.Correcto("Proyecto registrado exitosamente");
+			status = HttpStatus.CREATED;
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			nRespuesta.Error(e);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-
-		return ResponseEntity.ok(nRespuesta);
+		
+		return new ResponseEntity<>(nRespuesta, status);
 	}
 
 	@PutMapping("/proyectos/{codigo}")
-	public ResponseEntity<Respuesta> updateProyecto(@PathVariable(value = "codigo") String codigo,
+	public ResponseEntity<?> updateProyecto(@PathVariable(value = "codigo") String codigo,
 			@Valid @RequestBody Proyecto nProyecto) throws ResourceNotFoundException {
 		Respuesta nRespuesta = new Respuesta();
+		HttpStatus status;
 
 		try {
 			Proyecto updatedProy = repo.findByCodigo(codigo);
@@ -72,10 +93,12 @@ public class ProyectoController {
 			updatedProy.setVersion(nProyecto.getVersion());
 			repo.save(updatedProy);
 			nRespuesta.Correcto("Proyecto actualizado con exito");
+			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			nRespuesta.Error(e);
+			status = HttpStatus.BAD_REQUEST;
 		}
 
-		return ResponseEntity.ok(nRespuesta);
+		return new ResponseEntity<>(nRespuesta, status);
 	}
 }

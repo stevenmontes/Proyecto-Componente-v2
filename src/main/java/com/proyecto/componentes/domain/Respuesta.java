@@ -1,9 +1,9 @@
 package com.proyecto.componentes.domain;
 
 public class Respuesta {
-	public String mensaje;
-	public boolean estado;
-	public Object info;
+	private String mensaje;
+	private boolean estado;
+	private Object info;
 
 	public Respuesta() {
 		super();
@@ -53,5 +53,12 @@ public class Respuesta {
 
 	public void Error(String pMensaje) {
 		this.mensaje = pMensaje;
+		this.estado = false;
+	}
+	
+	public void Error(Exception e) {
+		this.info = e;
+		this.mensaje = e.getMessage();
+		this.estado = false;
 	}
 }
