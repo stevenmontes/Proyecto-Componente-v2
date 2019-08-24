@@ -24,7 +24,7 @@ import com.proyecto.componentes.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "https://bananas-client.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
 	@Autowired
 	private UsuarioRepository repo;
