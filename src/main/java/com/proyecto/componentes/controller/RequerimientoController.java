@@ -23,14 +23,13 @@ public class RequerimientoController {
 	@Autowired
 	private RequerimientoRepository repoReq;
 
-	@GetMapping("/requerimientos/funcionalidad/{codigoFuncionalidad}")
-	public ResponseEntity<?> getAllRequerimientos(
-			@PathVariable(value = "codigoFuncionalidad") String codigoFuncionalidad) {
+	@GetMapping("/requerimientos")
+	public ResponseEntity<?> getAllRequerimientos() {
 		Object info;
 		HttpStatus status;
 
 		try {
-			info = repoReq.getAllByFuncionalidad(codigoFuncionalidad);
+			info = repoReq.findAll();
 			status = HttpStatus.OK;
 		} catch (Exception e) {
 			Respuesta res = new Respuesta();

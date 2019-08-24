@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.componentes.domain.Funcionalidad;
 import com.proyecto.componentes.domain.Respuesta;
 import com.proyecto.componentes.repository.FuncionalidadRepository;
+import com.proyecto.componentes.repository.RequerimientoRepository;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,6 +24,9 @@ public class FuncionalidadController {
 
 	@Autowired
 	private FuncionalidadRepository repo;
+	
+	@Autowired
+	private RequerimientoRepository repoReq;
 
 	@GetMapping("/funcionalidades")
 	public ResponseEntity<?> getAllFuncionalidades() {
@@ -112,6 +116,24 @@ public class FuncionalidadController {
 		}
 
 		return new ResponseEntity<>(nRespuesta, status);
+	}
+
+	@GetMapping("funcionalidad/{codigoFuncionalidad}/requerimientos")
+	public ResponseEntity<?> getRequerimientos(@PathVariable("codigoFuncionalidad") String codFuncionalidad) {
+		Object info;
+		HttpStatus status;
+
+		try {
+			info = repoReq.getAllByFuncionalidad(codFuncionalidad);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			Respuesta res = new Respuesta();
+			res.Error(e);
+			info = res;
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(info, status);
 	}
 
 }
