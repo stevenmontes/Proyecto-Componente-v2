@@ -1,10 +1,9 @@
 package com.proyecto.componentes.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.componentes.domain.Requerimiento;
 import com.proyecto.componentes.domain.Respuesta;
-import com.proyecto.componentes.exception.ResourceNotFoundException;
 import com.proyecto.componentes.repository.RequerimientoRepository;
 
 @RestController
@@ -26,54 +24,92 @@ public class RequerimientoController {
 	private RequerimientoRepository repoReq;
 
 	@GetMapping("/requerimientos/funcionalidad/{codigoFuncionalidad}")
-	public List<Requerimiento> getAllRequerimientos(@PathVariable(value = "codigoFuncionalidad") String codigoFuncionalidad) {
-		return repoReq.getAllByFuncionalidad(codigoFuncionalidad);
+	public ResponseEntity<?> getAllRequerimientos(
+			@PathVariable(value = "codigoFuncionalidad") String codigoFuncionalidad) {
+		Object info;
+		HttpStatus status;
+
+		try {
+			info = repoReq.getAllByFuncionalidad(codigoFuncionalidad);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			Respuesta res = new Respuesta();
+			res.Error(e);
+			info = res;
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<>(info, status);
 	}
 
 	@GetMapping("/requerimientos/{codigo}")
-	public Requerimiento getRequerimiento(@PathVariable(value = "codigo") String codigo)
-			throws ResourceNotFoundException {
-		Requerimiento nReq = new Requerimiento();
+	public ResponseEntity<?> getRequerimiento(@PathVariable(value = "codigo") String codigo) {
+		Object info;
+		HttpStatus status;
 
 		try {
-			nReq = repoReq.findByCodigo(codigo);
+			Requerimiento nReq = repoReq.findByCodigo(codigo);
+
+			if (nReq == null) {
+				Respuesta res = new Respuesta();
+				res.Error("Codigo ingresado no existe. No se puede obtener el requerimiento.");
+				info = res;
+				status = HttpStatus.BAD_REQUEST;
+			} else {
+				info = nReq;
+				status = HttpStatus.OK;
+			}
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			Respuesta res = new Respuesta();
+			res.Error(e);
+			info = res;
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return nReq;
+		return new ResponseEntity<>(info, status);
 	}
 
 	@PostMapping("/requerimientos")
-	public ResponseEntity<Respuesta> createRequerimiento(@Valid @RequestBody Requerimiento nReq)
-			throws ResourceNotFoundException {
+	public ResponseEntity<?> createRequerimiento(@Valid @RequestBody Requerimiento nReq) {
 		Respuesta nRespuesta = new Respuesta();
+		HttpStatus status;
 
 		try {
 			repoReq.save(nReq);
 			nRespuesta.Correcto("Requerimiento registrado con exito");
+			status = HttpStatus.CREATED;
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			nRespuesta.Error(e);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return ResponseEntity.ok(nRespuesta);
+		return new ResponseEntity<>(nRespuesta, status);
 	}
 
 	@PutMapping("/requerimientos/{codigo}")
 	public ResponseEntity<Respuesta> updateRequerimiento(@Valid @RequestBody Requerimiento nReq,
-			@PathVariable(value = "codigo") String codigo) throws ResourceNotFoundException {
+			@PathVariable(value = "codigo") String codigo) {
 		Respuesta nRes = new Respuesta();
+		HttpStatus status;
 
 		try {
 			Requerimiento updatedReq = repoReq.findByCodigo(codigo);
-			updatedReq.setDescripcion(nReq.getDescripcion());
-			repoReq.save(updatedReq);
-			nRes.Correcto("Requerimiento actualizado con exito");
+
+			if (updatedReq == null) {
+				nRes.Error("Codigo ingresado no existe, no se puede actualizar el requerimiento.");
+				status = HttpStatus.BAD_REQUEST;
+			} else {
+				updatedReq.setDescripcion(nReq.getDescripcion());
+				repoReq.save(updatedReq);
+				nRes.Correcto("Requerimiento actualizado con exito");
+				status = HttpStatus.ACCEPTED;
+			}
 
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(e.getMessage());
+			nRes.Error(e);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return ResponseEntity.ok(nRes);
+		return new ResponseEntity<>(nRes, status);
 	}
 }
