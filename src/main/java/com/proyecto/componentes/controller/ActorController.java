@@ -43,7 +43,7 @@ public class ActorController {
 	}
 
 	@GetMapping("/actores/{id}")
-	public ResponseEntity<?> getActores(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+	public ResponseEntity<?> getActores(@PathVariable(value = "id") int id) {
 		HttpStatus status;
 		Object info;
 
@@ -71,7 +71,7 @@ public class ActorController {
 	}
 
 	@PostMapping("/actores")
-	public ResponseEntity<?> createActor(@Valid @RequestBody Actor nActor) throws ResourceNotFoundException {
+	public ResponseEntity<?> createActor(@Valid @RequestBody Actor nActor) {
 		Respuesta nRespuesta = new Respuesta();
 		HttpStatus status;
 
