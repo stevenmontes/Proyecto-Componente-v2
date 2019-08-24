@@ -26,13 +26,13 @@ public class Actor {
 	
 	
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "TBL_ACTORxFUNCIONALIDAD", 
-        joinColumns =  @JoinColumn(name = "ID_ACTOR",referencedColumnName = "ID"), 
-        inverseJoinColumns =  @JoinColumn(name = "ID_FUNCIONALIDAD" ,referencedColumnName = "CODIGO")
-    )
-    Set<Funcionalidad> funcionalidades;
+//	@ManyToMany(cascade = { CascadeType.ALL })
+//    @JoinTable(
+//        name = "TBL_ACTORxFUNCIONALIDAD", 
+//        joinColumns =  @JoinColumn(name = "ID_ACTOR",referencedColumnName = "ID"), 
+//        inverseJoinColumns =  @JoinColumn(name = "ID_FUNCIONALIDAD" ,referencedColumnName = "CODIGO")
+//    )
+//    Set<Funcionalidad> funcionalidades;
 	
     
 	public Actor(int id, String nombre, String descripcion, boolean estado) {
@@ -79,13 +79,13 @@ public class Actor {
 		this.estado = estado;
 	}
 	
-	public Set<Funcionalidad> getFuncionalidades() {
-		return funcionalidades;
-	}
-
-	public void setFuncionalidades(Set<Funcionalidad> funcionalidades) {
-		this.funcionalidades = funcionalidades;
-	}
+//	public Set<Funcionalidad> getFuncionalidades() {
+//		return funcionalidades;
+//	}
+//
+//	public void setFuncionalidades(Set<Funcionalidad> funcionalidades) {
+//		this.funcionalidades = funcionalidades;
+//	}
 
 	@Override
 	public String toString() {

@@ -1,4 +1,5 @@
 package com.proyecto.componentes.domain;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,26 +33,28 @@ public class Funcionalidad {
 	@Column(name = "ESTADO")
 	private boolean estado;
 
-	
-	
-	@ManyToMany(mappedBy = "funcionalidades")
-	private Set<Actor> actores = new HashSet<>();
-
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
+	@JoinTable(name = "TBL_ACTORxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"),
+	inverseJoinColumns = @JoinColumn(name = "ID_ACTOR", referencedColumnName = "ID"))
+	private Set<Actor> actores;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), 
+	inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
 	private Set<Requerimiento> requerimientos;
 
-	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto,
-			Requerimiento nReq) {
+	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.prioridad = prioridad;
 		this.proyecto = proyecto;
-		this.requerimientos = Stream.of(nReq).collect(Collectors.toSet());
-		this.requerimientos.forEach(x -> x.getFuncionalidades().add(this));
-	}
+//		this.requerimientos = Stream.of(nReq).collect(Collectors.toSet());
+//		this.requerimientos.forEach(x -> x.getFuncionalidades().add(this));
+//		this.actores = Stream.of(nAct).collect(Collectors.toSet());
+//		this.actores.forEach(y -> y.getActores().add(this));
+//	
+		}
 
 	public Funcionalidad() {
 
@@ -104,7 +107,6 @@ public class Funcionalidad {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	
 
 	public Set<Actor> getActores() {
 		return actores;
