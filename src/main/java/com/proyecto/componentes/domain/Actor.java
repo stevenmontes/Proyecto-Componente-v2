@@ -1,14 +1,8 @@
 package com.proyecto.componentes.domain;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,11 +15,9 @@ public class Actor {
 	private String nombre;
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	@Column(name="ESTADO")
+	@Column(name = "ESTADO")
 	private boolean estado;
-	
-	
-	
+
 //	@ManyToMany(cascade = { CascadeType.ALL })
 //    @JoinTable(
 //        name = "TBL_ACTORxFUNCIONALIDAD", 
@@ -33,8 +25,7 @@ public class Actor {
 //        inverseJoinColumns =  @JoinColumn(name = "ID_FUNCIONALIDAD" ,referencedColumnName = "CODIGO")
 //    )
 //    Set<Funcionalidad> funcionalidades;
-	
-    
+
 	public Actor(int id, String nombre, String descripcion, boolean estado) {
 		super();
 		this.id = id;
@@ -78,7 +69,7 @@ public class Actor {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	
+
 //	public Set<Funcionalidad> getFuncionalidades() {
 //		return funcionalidades;
 //	}
@@ -91,22 +82,5 @@ public class Actor {
 	public String toString() {
 		return "Actor [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estado=" + estado + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

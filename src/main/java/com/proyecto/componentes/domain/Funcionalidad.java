@@ -1,9 +1,6 @@
 package com.proyecto.componentes.domain;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,12 +31,10 @@ public class Funcionalidad {
 	private boolean estado;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "TBL_ACTORxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"),
-	inverseJoinColumns = @JoinColumn(name = "ID_ACTOR", referencedColumnName = "ID"))
+	@JoinTable(name = "TBL_ACTORxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_ACTOR", referencedColumnName = "ID"))
 	private Set<Actor> actores;
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), 
-	inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
+	@JoinTable(name = "TBL_REQUERIMIENTOxFUNCIONALIDAD", joinColumns = @JoinColumn(name = "ID_REQUERIMIENTO", referencedColumnName = "CODIGO"), inverseJoinColumns = @JoinColumn(name = "ID_FUNCIONALIDAD", referencedColumnName = "CODIGO"))
 	private Set<Requerimiento> requerimientos;
 
 	public Funcionalidad(String codigo, String nombre, String descripcion, int prioridad, Proyecto proyecto) {
@@ -54,7 +49,7 @@ public class Funcionalidad {
 //		this.actores = Stream.of(nAct).collect(Collectors.toSet());
 //		this.actores.forEach(y -> y.getActores().add(this));
 //	
-		}
+	}
 
 	public Funcionalidad() {
 
