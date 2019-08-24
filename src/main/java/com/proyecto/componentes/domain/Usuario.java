@@ -1,13 +1,10 @@
 package com.proyecto.componentes.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,8 +26,8 @@ public class Usuario {
 	@Column(name = "CLAVE")
 	private String clave;
 
-	//@ManyToMany(mappedBy = "usuarios")
-	//private Set<Proyecto> proyectos = new HashSet<>();
+	// @ManyToMany(mappedBy = "usuarios")
+	// private Set<Proyecto> proyectos = new HashSet<>();
 
 	public Usuario() {
 
