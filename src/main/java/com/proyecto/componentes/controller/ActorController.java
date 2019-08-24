@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.componentes.domain.Actor;
 import com.proyecto.componentes.domain.Respuesta;
-import com.proyecto.componentes.exception.ResourceNotFoundException;
 import com.proyecto.componentes.repository.ActorRepository;
 
 @RestController
@@ -88,8 +87,7 @@ public class ActorController {
 	}
 
 	@PutMapping("/actores/{id}")
-	public ResponseEntity<?> updateActor(@PathVariable(value = "id") int id, @Valid @RequestBody Actor nActor)
-			throws ResourceNotFoundException {
+	public ResponseEntity<?> updateActor(@PathVariable(value = "id") int id, @Valid @RequestBody Actor nActor) {
 		Respuesta nRespuesta = new Respuesta();
 		HttpStatus status;
 

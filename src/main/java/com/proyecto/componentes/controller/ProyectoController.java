@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.componentes.domain.Proyecto;
 import com.proyecto.componentes.domain.Respuesta;
-import com.proyecto.componentes.exception.ResourceNotFoundException;
 import com.proyecto.componentes.repository.ProyectoRepository;
 
 @RestController
@@ -44,11 +43,11 @@ public class ProyectoController {
 		Proyecto nProyecto = new Proyecto();
 		Respuesta nRes = new Respuesta();
 		HttpStatus status;
-		
+
 		try {
 			nProyecto = repo.findByCodigo(codigo);
-			
-			if(nProyecto == null) {
+
+			if (nProyecto == null) {
 				nRes.Error("Codigo del proyecto no existe");
 				status = HttpStatus.BAD_REQUEST;
 			} else {
@@ -59,15 +58,15 @@ public class ProyectoController {
 			nRes.Error(e);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		
+
 		return new ResponseEntity<>(nRes, status);
 	}
 
 	@PostMapping("/proyectos")
-	public ResponseEntity<?> createProyecto(@Valid @RequestBody Proyecto nProyecto) throws ResourceNotFoundException {
+	public ResponseEntity<?> createProyecto(@Valid @RequestBody Proyecto nProyecto) {
 		Respuesta nRespuesta = new Respuesta();
 		HttpStatus status;
-		
+
 		try {
 			repo.save(nProyecto);
 			nRespuesta.Correcto("Proyecto registrado exitosamente");
@@ -76,24 +75,31 @@ public class ProyectoController {
 			nRespuesta.Error(e);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		
+
 		return new ResponseEntity<>(nRespuesta, status);
 	}
 
 	@PutMapping("/proyectos/{codigo}")
 	public ResponseEntity<?> updateProyecto(@PathVariable(value = "codigo") String codigo,
-			@Valid @RequestBody Proyecto nProyecto) throws ResourceNotFoundException {
+			@Valid @RequestBody Proyecto nProyecto) {
 		Respuesta nRespuesta = new Respuesta();
 		HttpStatus status;
 
 		try {
 			Proyecto updatedProy = repo.findByCodigo(codigo);
-			updatedProy.setDescripcion(nProyecto.getDescripcion());
-			updatedProy.setNombre(nProyecto.getNombre());
-			updatedProy.setVersion(nProyecto.getVersion());
-			repo.save(updatedProy);
-			nRespuesta.Correcto("Proyecto actualizado con exito");
-			status = HttpStatus.ACCEPTED;
+
+			if (updatedProy == null) {
+				status = HttpStatus.BAD_REQUEST;
+				nRespuesta.Error("Codigo ingresado no exite, no se puede obtener el proyecto");
+			} else {
+				updatedProy.setDescripcion(nProyecto.getDescripcion());
+				updatedProy.setNombre(nProyecto.getNombre());
+				updatedProy.setVersion(nProyecto.getVersion());
+				repo.save(updatedProy);
+				nRespuesta.Correcto("Proyecto actualizado con exito");
+				status = HttpStatus.ACCEPTED;
+			}
+
 		} catch (Exception e) {
 			nRespuesta.Error(e);
 			status = HttpStatus.BAD_REQUEST;
